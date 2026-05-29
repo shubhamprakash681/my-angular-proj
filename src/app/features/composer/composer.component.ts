@@ -1,39 +1,37 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UiInputComponent } from '../../shared/input/ui-input.component';
 import { UiButtonComponent } from '../../shared/button/ui-button.component';
-import { StorageService } from '../../core/service/storage/storage.service';
 import { MemeService } from '../../core/service/meme/meme.service';
+import { EnrichedPost, PostDraft } from '../../core/models/meme.model';
+
+type ComposerData = {
+  post?: EnrichedPost;
+} | null;
 
 @Component({
   selector: 'app-composer',
-  imports: [UiInputComponent, UiButtonComponent, MatDialogModule],
+  imports: [UiInputComponent, UiButtonComponent],
   templateUrl: './composer.component.html',
   styleUrl: './composer.component.scss',
 })
 export class ComposerComponent implements OnInit {
   dialogRef = inject(MatDialogRef<ComposerComponent>);
-  data = inject(MAT_DIALOG_DATA);
-  storage = inject(StorageService);
+  data = inject<ComposerData>(MAT_DIALOG_DATA);
   memeService = inject(MemeService);
+
+  readonly moods = ['Happy', 'Frustrated', 'Chaotic', 'Optimistic', 'Neutral'];
 
   title = '';
   body = '';
   tags = '';
   mood = 'Neutral';
-
-  get draftKey() {
-    const userId = this.memeService.currentUser().id;
-    return this.data?.post ? `draft:${userId}:post:${this.data.post.id}` : `draft:${userId}:new`;
-  }
+  error = '';
 
   ngOnInit() {
-    const draft = this.storage.getItem<any>(this.draftKey);
+    const draft = this.memeService.getDraft(this.data?.post?.id);
     if (draft) {
-      this.title = draft.title || '';
-      this.body = draft.body || '';
-      this.tags = draft.tags || '';
-      this.mood = draft.mood || 'Neutral';
+      this.applyDraft(draft);
     } else if (this.data?.post) {
       this.title = this.data.post.title || '';
       this.body = this.data.post.body;
@@ -43,33 +41,51 @@ export class ComposerComponent implements OnInit {
   }
 
   saveDraft() {
-    this.storage.setItem(this.draftKey, {
-      title: this.title,
-      body: this.body,
-      tags: this.tags,
-      mood: this.mood,
-    });
+    this.memeService.saveDraft(
+      {
+        title: this.title,
+        body: this.body,
+        tags: this.tags,
+        mood: this.mood,
+      },
+      this.data?.post?.id,
+    );
+  }
+
+  updateMood(event: Event) {
+    this.mood = event.target instanceof HTMLSelectElement ? event.target.value : 'Neutral';
+    this.saveDraft();
   }
 
   submit() {
     const trimmedBody = this.body.trim();
-    if (!trimmedBody) return alert('Body is required');
+    if (!trimmedBody) {
+      this.error = 'Body is required.';
+      return;
+    }
 
     const postData = {
-      title: this.title,
+      title: this.title.trim() || undefined,
       body: trimmedBody,
       tags: this.tags
         .split(',')
-        .map((t) => t.trim())
+        .map((tag) => tag.trim().replace(/^#/, ''))
         .filter(Boolean),
-      mood: this.mood,
+      mood: this.mood || 'Neutral',
     };
 
     this.data?.post
       ? this.memeService.updatePost(this.data.post.id, postData)
       : this.memeService.addPost(postData);
 
-    this.storage.removeItem(this.draftKey);
+    this.memeService.removeDraft(this.data?.post?.id);
     this.dialogRef.close(true);
+  }
+
+  private applyDraft(draft: PostDraft) {
+    this.title = draft.title || '';
+    this.body = draft.body || '';
+    this.tags = draft.tags || '';
+    this.mood = draft.mood || 'Neutral';
   }
 }

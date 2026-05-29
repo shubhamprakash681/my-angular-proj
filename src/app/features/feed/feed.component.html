@@ -1,28 +1,101 @@
 <div class="feed-container">
-  <div class="toolbar">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Internal meme board</p>
+      <h1>Text memes</h1>
+    </div>
+    <app-ui-button variant="raised" color="primary" (clicked)="openComposer()">New Meme</app-ui-button>
+  </header>
+
+  <section class="toolbar" aria-label="Feed filters">
     <app-ui-input
       label="Search memes..."
       placeholder="Search title or body..."
-      [value]="searchQuery()"
-      (valueChange)="searchQuery.set($event)"
+      [value]="memeService.preferences().search"
+      (valueChange)="updateSearch($event)"
     ></app-ui-input>
-    <app-ui-button variant="raised" color="primary" (clicked)="openComposer()"
-      >New Meme</app-ui-button
-    >
-  </div>
+
+    <div class="filter-grid">
+      <label>
+        Team
+        <select [value]="memeService.preferences().team" (change)="updateTeam($event)">
+          <option value="">All teams</option>
+          @for (team of memeService.teams(); track team) {
+            <option [value]="team">{{ team }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Mood
+        <select [value]="memeService.preferences().mood" (change)="updateMood($event)">
+          <option value="">All moods</option>
+          @for (mood of memeService.moods(); track mood) {
+            <option [value]="mood">{{ mood }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Sort
+        <select [value]="memeService.preferences().sort" (change)="updateSort($event)">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="switch-row">
+      <label>
+        <input
+          type="checkbox"
+          [checked]="memeService.preferences().savedOnly"
+          (change)="toggleSavedOnly($event)"
+        />
+        Saved only
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          [checked]="memeService.preferences().likedOnly"
+          (change)="toggleLikedOnly($event)"
+        />
+        Liked by me
+      </label>
+      <app-ui-button (clicked)="memeService.resetPreferences()">Reset</app-ui-button>
+    </div>
+
+    <div class="tag-filter" aria-label="Tag filters">
+      @for (tag of memeService.tags(); track tag) {
+        <button
+          type="button"
+          [class.selected]="memeService.preferences().tags.includes(tag)"
+          (click)="toggleTag(tag)"
+        >
+          #{{ tag }}
+        </button>
+      }
+    </div>
+  </section>
 
   <div class="posts-list">
-    @for (post of filteredPosts(); track post.id) {
+    @for (post of memeService.filteredPosts(); track post.id) {
       <app-ui-card
         [subtitle]="
-          post.authorName + ' • ' + post.mood + ' • ' + (post.timestamp | date: 'shortTime')
+          post.authorName +
+          ' • ' +
+          post.team +
+          ' • ' +
+          post.mood +
+          ' • ' +
+          relativeTime(post.timestamp)
         "
         (click)="openDetail(post.id)"
       >
         @if (post.title) {
           <h3>{{ post.title }}</h3>
         }
-        <div class="post-body" [innerHTML]="post.body | spoiler"></div>
+        <app-ui-spoiler-text class="post-body" [text]="post.body" [preview]="true"></app-ui-spoiler-text>
         <div class="tags">
           @for (tag of post.tags; track tag) {
             <app-ui-tag [text]="tag"></app-ui-tag>
@@ -30,10 +103,10 @@
         </div>
         <div actions>
           <app-ui-button (clicked)="memeService.toggleLike(post.id)"
-            >{{ post.isLiked ? '❤️' : '🤍' }} {{ post.likesCount }}</app-ui-button
+            >{{ post.isLiked ? 'Liked' : 'Like' }} {{ post.likesCount }}</app-ui-button
           >
           <app-ui-button (clicked)="memeService.toggleBookmark(post.id)">{{
-            post.isSaved ? '💾 Saved' : 'Save'
+            post.isSaved ? 'Saved' : 'Save'
           }}</app-ui-button>
         </div>
       </app-ui-card>

@@ -2,13 +2,14 @@
   @if (post) {
     <div class="meta">
       {{ post.authorName }} ({{ post.team }}) • {{ post.mood }} •
-      {{ post.timestamp | date: 'shortTime' }}
+      {{ relativeTime(post.timestamp) }}
     </div>
+
     @if (post.title) {
       <h2>{{ post.title }}</h2>
     }
 
-    <div class="body" [innerHTML]="post.body | spoiler"></div>
+    <app-ui-spoiler-text class="body" [text]="post.body"></app-ui-spoiler-text>
 
     <div class="tags">
       @for (tag of post.tags; track tag) {
@@ -18,18 +19,35 @@
 
     <div class="actions">
       <app-ui-button (clicked)="memeService.toggleLike(post.id)"
-        >{{ post.isLiked ? '❤️' : '🤍' }} {{ post.likesCount }}</app-ui-button
+        >{{ post.isLiked ? 'Liked' : 'Like' }} {{ post.likesCount }}</app-ui-button
       >
       <app-ui-button (clicked)="memeService.toggleBookmark(post.id)">{{
-        post.isSaved ? '💾 Saved' : 'Save'
+        post.isSaved ? 'Saved' : 'Save'
       }}</app-ui-button>
-      <app-ui-button (clicked)="copyLink()">🔗 Share</app-ui-button>
+      <app-ui-button (clicked)="copyLink()">Share</app-ui-button>
 
       @if (post.authorId === memeService.currentUser().id) {
         <app-ui-button (clicked)="editPost()">Edit</app-ui-button>
-        <app-ui-button color="warn" (clicked)="deletePost()">Delete</app-ui-button>
+        <app-ui-button color="warn" (clicked)="deletePost()">{{
+          confirmDelete ? 'Confirm delete' : 'Delete'
+        }}</app-ui-button>
       }
       <app-ui-button (clicked)="dialogRef.close()">Close</app-ui-button>
     </div>
+
+    <section class="report-panel">
+      <h3>{{ post.isFlagged ? 'Update report' : 'Report post' }}</h3>
+      <app-ui-input
+        label="Reason"
+        placeholder="Spam, harassment, workplace unsafe, etc."
+        [value]="flagReason"
+        (valueChange)="flagReason = $event"
+      ></app-ui-input>
+      <app-ui-button [disabled]="!flagReason.trim()" (clicked)="reportPost()">Report</app-ui-button>
+    </section>
+
+    @if (statusMessage) {
+      <p class="status">{{ statusMessage }}</p>
+    }
   }
 </div>

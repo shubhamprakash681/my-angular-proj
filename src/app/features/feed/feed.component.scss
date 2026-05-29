@@ -1,32 +1,123 @@
 .feed-container {
-  max-width: 600px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 20px;
-}
-.toolbar {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-  align-items: baseline;
-}
-.tags {
-  margin-top: 12px;
-}
-.post-body {
-  font-size: 1.1em;
+  padding: 28px 20px 40px;
 }
 
-::ng-deep .spoiler-text {
-  background-color: #333;
-  color: #333;
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 0 4px;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-  &.revealed {
-    background-color: transparent;
-    color: inherit;
+.page-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+.eyebrow {
+  color: #8a3455;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.toolbar {
+  border: 1px solid #ead5dd;
+  border-radius: 8px;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 16px;
+}
+
+.filter-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+label {
+  color: #4a3940;
+  display: grid;
+  font-size: 0.86rem;
+  gap: 6px;
+}
+
+select {
+  background: #fff;
+  border: 1px solid #cbb8c0;
+  border-radius: 6px;
+  color: #211b1e;
+  font: inherit;
+  min-height: 40px;
+  padding: 0 10px;
+}
+
+.switch-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  label {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    background: #fff;
+    border: 1px solid #d9b8c8;
+    border-radius: 999px;
+    color: #5d2740;
+    cursor: pointer;
+    font: inherit;
+    padding: 6px 12px;
+  }
+
+  button.selected {
+    background: #7b1b45;
+    border-color: #7b1b45;
+    color: #fff;
+  }
+}
+
+.posts-list {
+  display: grid;
+  gap: 16px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.post-body {
+  display: block;
+  font-size: 1.04rem;
+}
+
+@media (max-width: 700px) {
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
   }
 }

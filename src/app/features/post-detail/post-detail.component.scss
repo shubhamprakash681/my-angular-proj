@@ -1,27 +1,51 @@
 .detail-layout {
   padding: 24px;
+
   .meta {
     color: #666;
     font-size: 0.9em;
     margin-bottom: 8px;
   }
+
+  h2 {
+    margin: 0 0 16px;
+  }
+
   .body {
+    display: block;
     font-size: 1.1em;
     margin: 16px 0;
   }
+
   .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
     margin-bottom: 24px;
   }
-  ::ng-deep .spoiler-text {
-    background-color: #333;
-    color: #333;
-    cursor: pointer;
-    border-radius: 4px;
-    padding: 0 4px;
-    transition: 0.3s;
-    &.revealed {
-      background-color: transparent;
-      color: inherit;
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .report-panel {
+    border-top: 1px solid #ead5dd;
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 16px;
+
+    h3 {
+      font-size: 1rem;
+      margin: 0;
     }
+  }
+
+  .status {
+    color: #315f36;
+    margin: 12px 0 0;
   }
 }

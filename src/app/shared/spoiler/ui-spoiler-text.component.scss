@@ -1,0 +1,44 @@
+.spoiler-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  button {
+    border: 0;
+    background: transparent;
+    color: #7b1b45;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+}
+
+.spoiler-body {
+  line-height: 1.55;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.spoiler-body.preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spoiler {
+  border: 0;
+  border-radius: 4px;
+  background: #242424;
+  color: transparent;
+  cursor: pointer;
+  font: inherit;
+  margin: 0 2px;
+  padding: 0 6px;
+  user-select: none;
+}
+
+.spoiler.revealed {
+  background: #f5dde8;
+  color: inherit;
+}

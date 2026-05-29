@@ -1,0 +1,23 @@
+@if (!preview && hasSpoilers) {
+  <div class="spoiler-actions">
+    <button type="button" (click)="revealAll()">Expand all</button>
+    <button type="button" (click)="collapseAll()">Collapse all</button>
+  </div>
+}
+
+<p class="spoiler-body" [class.preview]="preview">
+  @for (part of parts; track $index) {
+    @if (part.spoiler) {
+      <button
+        type="button"
+        class="spoiler"
+        [class.revealed]="part.revealed"
+        (click)="toggleSpoiler($index)"
+      >
+        {{ part.revealed ? part.text : 'Spoiler' }}
+      </button>
+    } @else {
+      <span>{{ part.text }}</span>
+    }
+  }
+</p>
