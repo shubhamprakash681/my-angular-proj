@@ -1,0 +1,44 @@
+<div class="feed-container">
+  <div class="toolbar">
+    <app-ui-input
+      label="Search memes..."
+      placeholder="Search title or body..."
+      [value]="searchQuery()"
+      (valueChange)="searchQuery.set($event)"
+    ></app-ui-input>
+    <app-ui-button variant="raised" color="primary" (clicked)="openComposer()"
+      >New Meme</app-ui-button
+    >
+  </div>
+
+  <div class="posts-list">
+    @for (post of filteredPosts(); track post.id) {
+      <app-ui-card
+        [subtitle]="
+          post.authorName + ' • ' + post.mood + ' • ' + (post.timestamp | date: 'shortTime')
+        "
+        (click)="openDetail(post.id)"
+      >
+        @if (post.title) {
+          <h3>{{ post.title }}</h3>
+        }
+        <div class="post-body" [innerHTML]="post.body | spoiler"></div>
+        <div class="tags">
+          @for (tag of post.tags; track tag) {
+            <app-ui-tag [text]="tag"></app-ui-tag>
+          }
+        </div>
+        <div actions>
+          <app-ui-button (clicked)="memeService.toggleLike(post.id)"
+            >{{ post.isLiked ? '❤️' : '🤍' }} {{ post.likesCount }}</app-ui-button
+          >
+          <app-ui-button (clicked)="memeService.toggleBookmark(post.id)">{{
+            post.isSaved ? '💾 Saved' : 'Save'
+          }}</app-ui-button>
+        </div>
+      </app-ui-card>
+    } @empty {
+      <p>No memes found.</p>
+    }
+  </div>
+</div>

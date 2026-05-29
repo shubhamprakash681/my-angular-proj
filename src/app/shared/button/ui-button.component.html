@@ -1,0 +1,28 @@
+@if (variant === 'raised') {
+  <button
+    mat-raised-button
+    [color]="color"
+    [disabled]="disabled"
+    (click)="clicked.emit($event); $event.stopPropagation()"
+  >
+    <ng-content></ng-content>
+  </button>
+} @else if (variant === 'flat') {
+  <button
+    mat-flat-button
+    [color]="color"
+    [disabled]="disabled"
+    (click)="clicked.emit($event); $event.stopPropagation()"
+  >
+    <ng-content></ng-content>
+  </button>
+} @else {
+  <button
+    mat-button
+    [color]="color"
+    [disabled]="disabled"
+    (click)="clicked.emit($event); $event.stopPropagation()"
+  >
+    <ng-content></ng-content>
+  </button>
+}

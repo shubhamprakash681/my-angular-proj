@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline" style="width: 100%">
+  <mat-label>{{ label }}</mat-label>
+  @if (multiline) {
+    <textarea
+      matInput
+      [placeholder]="placeholder"
+      [ngModel]="value"
+      (ngModelChange)="onModelChange($event)"
+      rows="4"
+    ></textarea>
+  } @else {
+    <input
+      matInput
+      [placeholder]="placeholder"
+      [ngModel]="value"
+      (ngModelChange)="onModelChange($event)"
+    />
+  }
+</mat-form-field>

@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FeedComponent } from './features/feed/feed.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [FeedComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('my-angular-proj');
+  protected readonly title = signal('Meme Sharing App');
 }

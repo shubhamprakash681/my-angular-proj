@@ -1,0 +1,32 @@
+<div class="composer-layout">
+  <h2>{{ data?.post ? 'Edit Meme' : 'New Meme' }}</h2>
+  <app-ui-input
+    label="Title (optional)"
+    placeholder="One liner..."
+    [value]="title"
+    (valueChange)="title = $event; saveDraft()"
+  ></app-ui-input>
+  <app-ui-input
+    label="Body"
+    placeholder="The actual meme or POV..."
+    [multiline]="true"
+    [value]="body"
+    (valueChange)="body = $event; saveDraft()"
+  ></app-ui-input>
+  <app-ui-input
+    label="Tags (comma separated)"
+    placeholder="e.g. angular, css"
+    [value]="tags"
+    (valueChange)="tags = $event; saveDraft()"
+  ></app-ui-input>
+  <app-ui-input
+    label="Mood"
+    placeholder="Happy, Sad, Frustrated..."
+    [value]="mood"
+    (valueChange)="mood = $event; saveDraft()"
+  ></app-ui-input>
+  <div class="actions">
+    <app-ui-button variant="basic" (clicked)="dialogRef.close()">Cancel</app-ui-button>
+    <app-ui-button variant="raised" color="primary" (clicked)="submit()">Post</app-ui-button>
+  </div>
+</div>
