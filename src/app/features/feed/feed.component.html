@@ -4,7 +4,9 @@
       <p class="eyebrow">Internal meme board</p>
       <h1>Text memes</h1>
     </div>
-    <app-ui-button variant="raised" color="primary" (clicked)="openComposer()">New Meme</app-ui-button>
+    <app-ui-button variant="raised" color="primary" (clicked)="openComposer()">
+      New Meme
+    </app-ui-button>
   </header>
 
   <section class="toolbar" aria-label="Feed filters">
@@ -95,7 +97,12 @@
         @if (post.title) {
           <h3>{{ post.title }}</h3>
         }
-        <app-ui-spoiler-text class="post-body" [text]="post.body" [preview]="true"></app-ui-spoiler-text>
+        <app-ui-spoiler-text
+          class="post-body"
+          [text]="post.body"
+          [preview]="true"
+          (click)="spoilerTextHandler($event)"
+        ></app-ui-spoiler-text>
         <div class="tags">
           @for (tag of post.tags; track tag) {
             <app-ui-tag [text]="tag"></app-ui-tag>

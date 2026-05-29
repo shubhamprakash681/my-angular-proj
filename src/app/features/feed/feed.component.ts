@@ -9,13 +9,24 @@ import { UiSpoilerTextComponent } from '../../shared/spoiler/ui-spoiler-text.com
 
 @Component({
   selector: 'app-feed',
-  imports: [UiCardComponent, UiButtonComponent, UiInputComponent, UiTagComponent, UiSpoilerTextComponent],
+  imports: [
+    UiCardComponent,
+    UiButtonComponent,
+    UiInputComponent,
+    UiTagComponent,
+    UiSpoilerTextComponent,
+  ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
 export class FeedComponent {
   memeService = inject(MemeService);
   private dialog = inject(DialogService);
+
+  spoilerTextHandler($event: Event) {
+    $event.stopPropagation();
+    // Optional: $event.preventDefault();
+  }
 
   updateSearch(search: string) {
     this.memeService.updatePreferences({ search });
