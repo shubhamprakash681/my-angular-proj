@@ -18,7 +18,7 @@
 }
 
 .eyebrow {
-  color: #8a3455;
+  color: #0a5f73;
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0;
@@ -27,7 +27,7 @@
 }
 
 .toolbar {
-  border: 1px solid #ead5dd;
+  border: 1px solid #c9dde3;
   border-radius: 8px;
   display: grid;
   gap: 14px;
@@ -42,7 +42,7 @@
 }
 
 label {
-  color: #4a3940;
+  color: #2d4046;
   display: grid;
   font-size: 0.86rem;
   gap: 6px;
@@ -50,9 +50,9 @@ label {
 
 select {
   background: #fff;
-  border: 1px solid #cbb8c0;
+  border: 1px solid #adc6cf;
   border-radius: 6px;
-  color: #211b1e;
+  color: #17272c;
   font: inherit;
   min-height: 40px;
   padding: 0 10px;
@@ -79,17 +79,17 @@ select {
 
   button {
     background: #fff;
-    border: 1px solid #d9b8c8;
+    border: 1px solid #a7c7d0;
     border-radius: 999px;
-    color: #5d2740;
+    color: #0b5869;
     cursor: pointer;
     font: inherit;
     padding: 6px 12px;
   }
 
   button.selected {
-    background: #7b1b45;
-    border-color: #7b1b45;
+    background: #0b6f84;
+    border-color: #0b6f84;
     color: #fff;
   }
 }

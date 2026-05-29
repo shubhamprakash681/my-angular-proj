@@ -2,6 +2,8 @@
   <button
     mat-raised-button
     [color]="color"
+    [class.ui-primary]="color === 'primary'"
+    [class.ui-warn]="color === 'warn'"
     [disabled]="disabled"
     (click)="clicked.emit($event); $event.stopPropagation()"
   >
@@ -11,6 +13,8 @@
   <button
     mat-flat-button
     [color]="color"
+    [class.ui-primary]="color === 'primary'"
+    [class.ui-warn]="color === 'warn'"
     [disabled]="disabled"
     (click)="clicked.emit($event); $event.stopPropagation()"
   >
@@ -20,6 +24,8 @@
   <button
     mat-button
     [color]="color"
+    [class.ui-primary]="color === 'primary'"
+    [class.ui-warn]="color === 'warn'"
     [disabled]="disabled"
     (click)="clicked.emit($event); $event.stopPropagation()"
   >

@@ -1,1 +1,68 @@
-/* Scoped button styling */
+:host {
+  display: inline-flex;
+}
+
+button {
+  max-width: 100%;
+}
+
+.mat-mdc-raised-button.ui-primary {
+  --mat-button-protected-container-color: var(--mat-sys-primary, #0b6f84);
+  --mat-button-protected-label-text-color: var(--mat-sys-on-primary, #ffffff);
+  --mat-button-protected-state-layer-color: var(--mat-sys-on-primary, #ffffff);
+  --mat-button-protected-ripple-color: color-mix(
+    in srgb,
+    var(--mat-sys-on-primary, #ffffff) 16%,
+    transparent
+  );
+  background-color: var(--mat-sys-primary, #0b6f84) !important;
+  color: var(--mat-sys-on-primary, #ffffff) !important;
+}
+
+.mat-mdc-unelevated-button.ui-primary {
+  --mat-button-filled-container-color: var(--mat-sys-primary, #0b6f84);
+  --mat-button-filled-label-text-color: var(--mat-sys-on-primary, #ffffff);
+  --mat-button-filled-state-layer-color: var(--mat-sys-on-primary, #ffffff);
+  --mat-button-filled-ripple-color: color-mix(
+    in srgb,
+    var(--mat-sys-on-primary, #ffffff) 16%,
+    transparent
+  );
+  background-color: var(--mat-sys-primary, #0b6f84) !important;
+  color: var(--mat-sys-on-primary, #ffffff) !important;
+}
+
+.mat-mdc-raised-button.ui-warn {
+  --mat-button-protected-container-color: var(--mat-sys-error, #b3261e);
+  --mat-button-protected-label-text-color: var(--mat-sys-on-error, #ffffff);
+  --mat-button-protected-state-layer-color: var(--mat-sys-on-error, #ffffff);
+  background-color: var(--mat-sys-error, #b3261e) !important;
+  color: var(--mat-sys-on-error, #ffffff) !important;
+}
+
+.mat-mdc-unelevated-button.ui-warn {
+  --mat-button-filled-container-color: var(--mat-sys-error, #b3261e);
+  --mat-button-filled-label-text-color: var(--mat-sys-on-error, #ffffff);
+  --mat-button-filled-state-layer-color: var(--mat-sys-on-error, #ffffff);
+  background-color: var(--mat-sys-error, #b3261e) !important;
+  color: var(--mat-sys-on-error, #ffffff) !important;
+}
+
+.mat-mdc-button.ui-primary {
+  --mat-button-text-label-text-color: var(--mat-sys-primary, #0b6f84);
+  color: var(--mat-sys-primary, #0b6f84) !important;
+}
+
+.mat-mdc-button.ui-warn {
+  --mat-button-text-label-text-color: var(--mat-sys-error, #b3261e);
+  color: var(--mat-sys-error, #b3261e) !important;
+}
+
+.ui-primary .mdc-button__label,
+.ui-warn .mdc-button__label {
+  color: inherit;
+}
+
+button[disabled] {
+  opacity: 0.58;
+}
