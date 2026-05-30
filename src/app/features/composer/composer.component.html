@@ -38,6 +38,12 @@
 
   <div class="actions">
     <app-ui-button variant="basic" (clicked)="dialogRef.close()">Cancel</app-ui-button>
-    <app-ui-button variant="raised" color="primary" (clicked)="submit()">Post</app-ui-button>
+    <app-ui-button
+      class="custom-outlined-button"
+      variant="basic"
+      color="primary"
+      (clicked)="submit()"
+      >Post</app-ui-button
+    >
   </div>
 </div>
